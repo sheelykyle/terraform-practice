@@ -2,5 +2,6 @@ TERRAFORM VARIABLES
 ---
 Variables: You must define input values when you want to execute Terraform configuration code.
   Syntax: <argument name> = var.<variable name>
-  Don't forget to declare the variable in any file ending with .tf, but typically in a variables.tf file or a .tfvars file!
-  If your config is small, you coude perhaps define it in any file, include main.tf
+
+Best practice:
+  Define the variables in variables.tf, put the variable values in terraform.tfvars, reference the variable values in main.tf or equivalent .tf file.
