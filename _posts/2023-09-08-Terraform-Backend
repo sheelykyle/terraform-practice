@@ -1,0 +1,31 @@
+TERRAFORM BACKEND
+---
+A critical component of the desired state model is mapping what currently exists in the environment and what is expressed in the declarative code. Terraform tracks this mapping
+through a JSON formatted data structure called a state file.
+
+State files store current knowledge of the state of the configured infrastrucutre, which reduces the complexity of the resource deployment when you are handling large
+enterprise infrastructures. When running "terraform plan", the state file helps Terraform understand any kind of infrastructure deviation from the existing resources.
+State files also store resource dependencies that exist. Storing info like this and the latest attributes from all your resources also improves performance within
+large enterprise infrastructures, especially when users set "-refresh=false" as well as the "-target" flag, treating the cached state file as the record of truth.
+
+Best practices:
+  -By default, store terraform.tfstate in the current working directory, but can also be stored in a remote storage location (ex. AWS S3)
+  -DO NOT EDIT OR MAKE CHANGES DIRECTLY TO THE STATE FILE
+  -Store the state file in a remote state and utilize remote locking so that only one person is able to run Terraform at a time, preventing sync errors.
+
+  ---
+  BACKEND TYPES
+
+  Local backend: stored locally in the directory with the other config files.
+
+  Remote backend: stored in a third-party, remote storage location (ex. AWS S3)
+    -protected state file in a remote lock feature to prevent corruption (state locking in AWS would require Amazon DynamoDB)
+    -keeps sensitive information off disk
+    -you can turn off your computer and TF operations will continue to run remotely until completed (only in Terraform Cloud SaaS product)
+
+    TYPES OF REMOTE BACKEND:
+      -Standard: includes state management and possibly locking
+        *AWS S3 is one type of standard backend
+      -Enhanced: includes remote operations on top of standard features
+      
+  
