@@ -1,0 +1,9 @@
+TERRAFORM PROVIDERS
+---
+Provider: an executable plugin which defines the version, auth details, etc for reaching out to a specific cloud service (ex. AWS).
+Downloaded when you run "terraform init"
+
+(Terraform Registry is the main directory of publicly available Terraform providers and hosts providers for most major infra platforms).
+More info for AWS can be found here: https://registry.terraform.io/providers/hashicorp/aws/latest
+
+Best practice: to place this info in a file named "providers.tf"
