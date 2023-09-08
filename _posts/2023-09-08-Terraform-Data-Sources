@@ -1,0 +1,4 @@
+TERRAFORM DATA SOURCES
+---
+Data sources: Extract output or information from already existing resources that got provisioned by any other Terraform configuration, manually, or by any other means.
+  Ex: Extract info about an existing VPC so you can provision a new subnet inside the existing VPC
