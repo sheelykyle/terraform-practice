@@ -1,0 +1,11 @@
+
+1. Download the correct version of Terraform you want to use.
+terraform.io/downloads.html
+
+2. Extract it to wherever you want.
+
+3. Set the environmental variable path for terraform.exe by going to This PC -> Properties -> Advanced system settings -> Environment Variables
+
+4. Under System Variables, add a path by locating your terraform.exe
+
+5. Determine your current version by typing "terraform -v"
