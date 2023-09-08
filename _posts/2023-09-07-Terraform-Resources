@@ -1,0 +1,6 @@
+TERRAFORM RESOURCES
+---
+Resource: Code blocks that tell Terraform which infrastructure objects to create, delete, or update. These are the most important code blocks.
+
+Terraform defines an AWS resource code block with "aws_instance", but it takes the same approach with any other provider.
+
