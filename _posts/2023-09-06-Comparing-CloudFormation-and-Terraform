@@ -1,0 +1,53 @@
+Terraform and CloudFormation templates both have their place in Infrastructure as Code. The below details each template's benefits
+(According to HashiCorp's Infrastructure Automation Guide). As I learn more about AWS and TF, I might go back and update this list
+if I find that it is not as accurate or nuanced as it could be.
+
+---
+Terraform Benefits
+  Language: TF uses HashiCorp Configuration Language (HCL), which allows variables and attributes.
+  TF is simpler than CF, but its simplicity limits some complex conditional structures.
+
+  Modularity: Extremely modular (can be easily written and reused).
+
+  Validation: TF has the plan phase, which does all of the validation with one phase.
+
+  Readability: Easier (I agree with this) than what CF config files look like. 
+
+  License and Support: Used to be completely open source with the Mozilla Public License, but is no longer since 2014. Switched
+  to Business Source License (BSL). Still open source depending on who you ask. TF has the Cloud Enterprise product that Enterprise
+  Customers must use now.
+
+  AWS Console Support: No console option, but TF Cloud Enterprise version gives you a console to see your resource deployments' progress.
+
+  Workflow: Provisions required infra unless it fails. If it does fail, it doesn't destroy or alter the existing resources created prior to failure.
+  Rerunning TF configs will provision the remaining resources rather than creating all new resources from scratch.
+
+  Error Message Understandability: TF errors are less understandable than AWS errors to start. I also think there're less docs and forum posts
+  that give insight into the error. There're also less people who know TF on teams to ask questions to as compared to AWS.
+
+  Infrastructure State Management: State files are primarily stored on local disk, but you can put state files in a remote backend location (ex. s3)
+  in JSON format.
+
+---
+CloudFormation Benefits
+  Language: CF uses JSON or YAML, both bare notation languages.
+  It doesn't reference parameters as well as Terraform, but is better with conditional functions (ex. if-else, wait, etc.).
+
+  Modularity: Only modular when used in nested stacks.
+
+  Validation: Can do everything TF can but is--like much of AWS--spread across multiple tools (CloudFormation stacks, CloudFormation Designer, etc.).
+
+  Readability: Not as easy as TF. JSON and YAML definitely are more complex to read through.
+
+  License and Support: AWS has tons of licensing and support tiers too, I'd say even more than TF especially as an Enterprise customer.
+
+  AWS Console Support: Obviously great console support given that it is a native AWS tool.
+
+  Workflow: CloudFormation has the "rollback on failure" option, which can provide benefits but also adds time and effort, as a CF config will
+  destroy all newly created resources if something in the stack fails rather than only the stuff that failed.
+
+  Error Message Understandability: In my opinion, errors are more straightforward as well as there are more people who've messed with these errors,
+  so there's more documentation and forum notes than what exists for TF.
+
+  Infrastructure State Management: Native to AWS. 
+---
