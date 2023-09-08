@@ -1,0 +1,21 @@
+TERRAFORM OUTPUT
+---
+Output values: Return values of a Terraform resource/module/data block. Can be called from Terraform apply or through other resources to act as an input.
+  Ex. Public or private IP
+
+Best Practice: Define all your output code in a separate file, typically named output.tf.
+
+---
+OPTIONAL OUTPUT ARGUMENTS
+
+TF supports some optional outputs:
+  description (string): understand what is going on with an output value
+
+  sensitive (boolean): define that the output has sensitive information, preventing this information from showing its values in CLI when running "terraform apply".
+    Note: still recorded in state file and visible in plain text to anyone who has access to the state file
+
+  depends_on (argument): If you wish to define an explicit dependency required, you can define it with this. Should only be used as last resort,
+    make sure to include a comment to explain the additional dependency required.
+    (Ex. A security group rule must be created before an IP address can be used)
+
+  
