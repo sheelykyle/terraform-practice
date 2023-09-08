@@ -7,3 +7,17 @@ Downloaded when you run "terraform init"
 More info for AWS can be found here: https://registry.terraform.io/providers/hashicorp/aws/latest
 
 Best practice: to place this info in a file named "providers.tf"
+
+ALIAS
+If you need to override the default provider's config for a resource, you can create an alternative provider with alias. (ex. having an alias for a different region)
+
+Example:
+
+provider "aws" {
+  region    = "us-east-1"
+}
+
+provider "aws" {
+  alias     = "europe"
+  region    = "europe-west-1"
+}
