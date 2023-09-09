@@ -1,0 +1,16 @@
+TERRAFORM PROVISIONERS
+---
+Provisioners: install software edit files, and provision machines created with Terraform. Place YAML or bash script into user_data.
+  *Use cases include loading data into or boostrapping a VM or saving data locally.
+  *Recommended as a last resort because Terraform cannot track the results and status of provisioners like it can other resources.
+
+For AWS EC2, you use:
+  user_data or user_data_base64 for aws_instance, aws_launch_template, and aws_launch_configuration
+
+For Amazon Lightsail, you use:
+  user_data on aws_lightsail_instance
+
+---
+PROVISIONER TYPES
+
+<TO BE COMPLETED LATER>
