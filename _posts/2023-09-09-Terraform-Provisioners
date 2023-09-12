@@ -1,7 +1,7 @@
 TERRAFORM PROVISIONERS
 ---
 Provisioners: install software edit files, and provision machines created with Terraform. Place YAML or bash script into user_data.
-  *Use cases include loading data into or boostrapping a VM or saving data locally.
+  *Use cases include loading data into or bootsrapping a VM or saving data locally.
   *Recommended as a last resort because Terraform cannot track the results and status of provisioners like it can other resources.
 
 For AWS EC2, you use:
@@ -12,5 +12,83 @@ For Amazon Lightsail, you use:
 
 ---
 PROVISIONER TYPES
+  *local-exec provisioner: recommended as a temporary workaround if the feature you're looking for is not available in the provider.
 
-<TO BE COMPLETED LATER>
+#ex. code block below extracts the server IP address when it gets created, and an on_failure argument tells it to continue or fail depending on choice.
+resource "aws_instance" "example" {
+  provisioner "local-exec" {
+    command = "echo The EC2 server IP address is ${self.private_ip}"
+    on_failure = continue
+  }
+}
+
+#ex. define when an argument will destroy
+resource "google_computer_instance" "example" {
+ provision "local-exec" {
+   when     = destroy
+   command = "echo We are discussing Destroy-time provisioner"
+  }
+}
+
+#ex. define multiple provisioners
+resource "google_compute_instance" "example" {
+ provisioner "local-exec" {
+  command = "echo We have executed first command successfully"
+  }
+ provisioner "local-exec" {
+  command = "echo We have executed second command successfully"
+  }
+}
+
+#ex. define powershell script
+resource "null_resource" "script" {
+  triggers = {
+    always_run  = "${timestamp()}"
+  }
+  provisioner "local-exec" {
+    command     = "${path.module}/script.ps1"
+    interpreter = ["powershell", "-File"}
+  }
+}
+
+#ex. Grab an AWS instance's private IP address and place it in a local private_ips.txt filename that will be created in the local directory:
+resource "aws_instance" "example" {
+  provisioner "local-exec" {
+    command = "echo ${aws_instance.example.private_ip" >> private_ips.txt"
+  }
+}
+
+======================================
+
+  *file provisioner: copy files or directories from the machine where Terraform is executed to the newly created resource.
+    -arguments include source (source folder or file you want copied), content (attribute will help you to copy content to its destination), and
+    -destination (the absolute path you want to copy to)
+#ex. copies several files to different locations
+
+resource "aws_instance" "example" {
+  #Copies the app.conf file to /etc/app.conf"
+  provisioner "file" {
+    source      = "conf/app.conf"
+    destination = "/etc/app.conf"
+  }
+  #copies the string in content into /tmp/amifile.log
+  provisioner "file" {
+    content     = "ami used: ${self.ami}"
+    destination = "/tmp/amifile.log"
+  }
+
+======================================
+
+  *remote-exec provisioner: helps run a script on the remote resource once it is created
+    -arguments include inline (list of commands executed in sequence), script (relative path of a local script that will be copied to the remote
+    -resource and then executed), and scripts (list of relative paths to local scripts that are copied to the remote resource and then executed)
+       ***inline, script, and scripts cannot be defined with one another***
+
+resource "aws_instance" "example" {
+  provisioner "remote-exec" {
+    inline = [
+      "puppet apply",
+      "consul join ${aws_instance.example.private_ip}",
+    ]
+  }
+}
